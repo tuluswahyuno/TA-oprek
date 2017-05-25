@@ -163,10 +163,8 @@ use yii\widgets\ActiveForm;
             
             $form->field($modelDataOrangTua, 'alamat_ibu') . "
 
-            </div>
-        "
+            </div>"
     ?>
-
 
         <?php
     $wizard_config = [
