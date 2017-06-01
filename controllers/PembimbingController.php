@@ -3,17 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Divisi;
-use app\models\DivisiSearch;
+use app\models\Pembimbing;
+use app\models\PembimbingSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\Pembimbing;
 
 /**
- * DivisiController implements the CRUD actions for Divisi model.
+ * PembimbingController implements the CRUD actions for Pembimbing model.
  */
-class DivisiController extends Controller
+class PembimbingController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,12 +30,12 @@ class DivisiController extends Controller
     }
 
     /**
-     * Lists all Divisi models.
+     * Lists all Pembimbing models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new DivisiSearch();
+        $searchModel = new PembimbingSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,29 +45,25 @@ class DivisiController extends Controller
     }
 
     /**
-     * Displays a single Divisi model.
+     * Displays a single Pembimbing model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
     {
-        $model = $this->findModel($id);
-        $nama_pembimbing = Pembimbing::find()->where(['id'=>$model->pembimbing_id])->one();
-
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'nama_pembimbing' => $nama_pembimbing,
         ]);
     }
 
     /**
-     * Creates a new Divisi model.
+     * Creates a new Pembimbing model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Divisi();
+        $model = new Pembimbing();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -80,7 +75,7 @@ class DivisiController extends Controller
     }
 
     /**
-     * Updates an existing Divisi model.
+     * Updates an existing Pembimbing model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -99,7 +94,7 @@ class DivisiController extends Controller
     }
 
     /**
-     * Deletes an existing Divisi model.
+     * Deletes an existing Pembimbing model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -112,15 +107,15 @@ class DivisiController extends Controller
     }
 
     /**
-     * Finds the Divisi model based on its primary key value.
+     * Finds the Pembimbing model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Divisi the loaded model
+     * @return Pembimbing the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Divisi::findOne($id)) !== null) {
+        if (($model = Pembimbing::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

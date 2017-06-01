@@ -1,23 +1,24 @@
 <?php
 
 use yii\helpers\Html;
+/*use yii\grid\GridView;*/
 use kartik\grid\GridView;
 use kartik\export\ExportMenu;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\BorangPendaftaranSearch */
+/* @var $searchModel app\models\PembimbingSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Data Pendaftaran';
-/*$this->params['breadcrumbs'][] = $this->title;*/
+$this->title = 'Pembimbing';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="borang-pendaftaran-index">
+<div class="pembimbing-index">
 
     <!-- <h1><?= Html::encode($this->title) ?></h1> -->
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Tambah Pendaftar', ['create'], ['class' => 'btn btn-primary grid-button']) ?>
+        <?= Html::a('Tambah Pembimbing', ['create'], ['class' => 'btn btn-primary grid-button']) ?>
     </p>
 
     <?php
@@ -25,14 +26,10 @@ $this->title = 'Data Pendaftaran';
     $gridColumns = [
     ['class' => 'kartik\grid\SerialColumn'],
     'id',
-    'nama',
-    'prodi',
-    'fakultas',
-    'pembimbing_akademik',
     'nip',
-    'semester',
+    'nama_pembimbing',
     ];
-
+    
     
     //export configuration
     $fullExportMenu = ExportMenu::widget([
@@ -74,32 +71,10 @@ $this->title = 'Data Pendaftaran';
             ['class' => 'yii\grid\SerialColumn'],
 
             /*'id',*/
-            'id_user',
-            'nama',
-            'prodi',
-            'fakultas',
-            // 'pembimbing_akademik',
-            // 'nip',
-            // 'semester',
-            // 'tahun_akademik',
-            // 'tempat_lahir',
-            // 'tanggal_lahir',
-            // 'jenis_kelamin',
-            // 'agama',
-            // 'status_marital',
-            // 'alamat_asal:ntext',
-            // 'alamat_kost:ntext',
-            // 'no_hp',
-            // 'hobi:ntext',
-            // 'url_blog:ntext',
-            // 'pengalaman_it:ntext',
-            // 'kemampuan_khusus:ntext',
-            // 'status_validasi',
-            // 'divisi_id',
+            'nip',
+            'nama_pembimbing',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]);
-
-    ?>
+    ]); ?>
 </div>

@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Divisi;
+use app\models\Pembimbing;
 
 /**
- * DivisiSearch represents the model behind the search form of `app\models\Divisi`.
+ * PembimbingSearch represents the model behind the search form of `app\models\Pembimbing`.
  */
-class DivisiSearch extends Divisi
+class PembimbingSearch extends Pembimbing
 {
     /**
      * @inheritdoc
@@ -19,7 +19,7 @@ class DivisiSearch extends Divisi
     {
         return [
             [['id'], 'integer'],
-            [['pembimbing_id','divisi'], 'safe'],
+            [['nip', 'nama_pembimbing'], 'safe'],
         ];
     }
 
@@ -41,9 +41,7 @@ class DivisiSearch extends Divisi
      */
     public function search($params)
     {
-        $query = Divisi::find();
-
-        $query->joinwith('pembimbing');
+        $query = Pembimbing::find();
 
         // add conditions that should always apply here
 
@@ -62,11 +60,10 @@ class DivisiSearch extends Divisi
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            
         ]);
 
-        $query->andFilterWhere(['like', 'divisi', $this->divisi])
-        ->andFilterWhere(['like', 'pembimbing.nama_pembimbing', $this->pembimbing_id]);
+        $query->andFilterWhere(['like', 'nip', $this->nip])
+            ->andFilterWhere(['like', 'nama_pembimbing', $this->nama_pembimbing]);
 
         return $dataProvider;
     }

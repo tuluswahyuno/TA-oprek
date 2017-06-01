@@ -29,9 +29,9 @@ class Divisi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['divisi', 'pembimbing'], 'required'],
+            [['divisi', 'pembimbing_id'], 'required'],
             [['divisi'], 'string', 'max' => 30],
-            [['pembimbing'], 'string', 'max' => 60],
+            [['pembimbing_id'], 'string', 'max' => 60],
         ];
     }
 
@@ -43,7 +43,7 @@ class Divisi extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'divisi' => 'Divisi',
-            'pembimbing' => 'Pembimbing',
+            'pembimbing_id' => 'Nama Pembimbing',
         ];
     }
 
@@ -54,4 +54,14 @@ class Divisi extends \yii\db\ActiveRecord
     {
         return $this->hasMany(BorangPendaftaran::className(), ['divisi_id' => 'id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPembimbing()
+    {
+        return $this->hasOne(Pembimbing::className(), ['id' => 'pembimbing_id']);
+    }
+
+    
 }

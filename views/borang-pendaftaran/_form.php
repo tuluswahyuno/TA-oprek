@@ -2,6 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\date\DatePicker;
+use kartik\depdrop\DepDrop;
+use app\models\Divisi;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\BorangPendaftaran */
@@ -10,6 +14,13 @@ use yii\widgets\ActiveForm;
 
 
 <div class="borang-pendaftaran-form">
+
+    <div class="box box-solid box-primary">
+            <div class="box-header text-center">
+                <i class="fa fa-id-card"></i> FORM PENDAFTARAN MAGANG UPT TEKNOLOGI INFORMASI DAN KOMUNIKASI UNS
+            </div>
+
+            <div class="box-body">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -21,9 +32,9 @@ use yii\widgets\ActiveForm;
 
             $form->field($model, 'nama')->textInput(['maxlength' => true]).
             
-            $form->field($model, 'prodi')->textInput(['maxlength' => true]).
-            
             $form->field($model, 'fakultas')->textInput(['maxlength' => true]).
+                    
+            $form->field($model, 'prodi')->textInput(['maxlength' => true]).
             
             $form->field($model, 'pembimbing_akademik')->textInput(['maxlength' => true]).
             
@@ -35,11 +46,26 @@ use yii\widgets\ActiveForm;
 
             $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true]) .
 
-            $form->field($model, 'tanggal_lahir')->textInput() .
+            $form->field($model, 'tanggal_lahir')->widget(DatePicker::className(),
+                            [
+                                'options' => ['placeholder' => 'pilih tanggal lahir'],
+                                'pluginOptions' => [
+                                    'autoClose' => true,
+                                    'format' => 'yyyy/mm/dd',
+                                ],
+                            ]) .
 
             $form->field($model, 'jenis_kelamin')->textInput(['maxlength' => true]) .
 
             $form->field($model, 'agama')->textInput(['maxlength' => true]) .
+
+            $form->field($model, 'file_foto')->fileInput() .
+
+            $form->field($model, 'file_khs')->fileInput() .
+
+            $form->field($model, 'file_surat_rekomendasi')->fileInput() .
+
+            $form->field($model, 'file_sertifikat')->fileInput() .
 
             
 
@@ -62,7 +88,17 @@ use yii\widgets\ActiveForm;
 
             $form->field($model, 'kemampuan_khusus')->textarea(['rows' => 2]).
 
-            $form->field($model, 'divisi_id')->textInput().
+           /* $form->field($model, 'divisi_id')->textInput(['maxlength' => true]).*/
+
+            $form->field($model, 'divisi_id')
+            ->label('Divisi')
+            ->dropDownList(ArrayHelper::map(Divisi::find()
+            ->all(),
+            'id','divisi'),
+            ['prompt' => '-- Pilih Divisi --']
+            ).
+
+           
 
         "</div>
     ";
@@ -84,11 +120,11 @@ use yii\widgets\ActiveForm;
             '.
            
 
-            $form->field($modelRiwayatPendidikan, 'jenjang') .
+            $form->field($modelRiwayatPendidikanSD, '[SD]jenjang')->hiddenInput(['value'=>'Sekolah Dasar'])->label(false).
 
-            $form->field($modelRiwayatPendidikan, 'nama_sekolah') .
+            $form->field($modelRiwayatPendidikanSD, '[SD]nama_sekolah') .
 
-            $form->field($modelRiwayatPendidikan, 'tahun_lulus') .'
+            $form->field($modelRiwayatPendidikanSD, '[SD]tahun_lulus') .'
           </div>
         </div>
       </div>
@@ -105,11 +141,11 @@ use yii\widgets\ActiveForm;
             '.
            
 
-            $form->field($modelRiwayatPendidikan, 'jenjang') .
+            $form->field($modelRiwayatPendidikanSMP, '[SMP]jenjang')->hiddenInput(['value'=>'Sekolah Menengah Pertama'])->label(false) .
 
-            $form->field($modelRiwayatPendidikan, 'nama_sekolah') .
+            $form->field($modelRiwayatPendidikanSMP, '[SMP]nama_sekolah') .
 
-            $form->field($modelRiwayatPendidikan, 'tahun_lulus') .'
+            $form->field($modelRiwayatPendidikanSMP, '[SMP]tahun_lulus') .'
           </div>
         </div>
       </div>
@@ -126,11 +162,11 @@ use yii\widgets\ActiveForm;
             '.
           
 
-            $form->field($modelRiwayatPendidikan, 'jenjang') .
+            $form->field($modelRiwayatPendidikanSMA, '[SMA]jenjang')->hiddenInput(['value'=>'Sekolah Menengah Atas'])->label(false) .
 
-            $form->field($modelRiwayatPendidikan, 'nama_sekolah') .
+            $form->field($modelRiwayatPendidikanSMA, '[SMA]nama_sekolah') .
 
-            $form->field($modelRiwayatPendidikan, 'tahun_lulus') .'
+            $form->field($modelRiwayatPendidikanSMA, '[SMA]tahun_lulus') .'
           </div>
         </div>
       </div>
@@ -185,7 +221,7 @@ use yii\widgets\ActiveForm;
             ],
             2 => [
                 'title' => 'Step 2',
-                'icon' => 'glyphicon glyphicon-user',
+                'icon' => 'glyphicon glyphicon-education',
                 'content' => $modelForm4,
                 'buttons' => [
                     'next' => [
@@ -204,13 +240,13 @@ use yii\widgets\ActiveForm;
             ],
             3 => [
                 'title' => 'Step 3',
-                'icon' => 'glyphicon glyphicon-cloud-upload',
+                'icon' => 'glyphicon glyphicon-user',
                 'content' => $modelForm3,
                 'buttons' => [
                     'save' => [
                         'title' => 'Simpan', 
                         'options' => [
-                            'class' => 'btn btn-success',
+                            'class' => 'btn btn-primary grid-button',
                             'type' => 'submit'
                         ],
                      ],
@@ -235,13 +271,12 @@ use yii\widgets\ActiveForm;
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div> -->
 
-    <?= $form->field($model, 'id_user')->hiddenInput()->label(false) ?>
-    <?= $form->field($model, 'status_validasi')->hiddenInput()->label(false) ?>
-    <?= $form->field($modelRiwayatPendidikan, 'id_pendaftaran')->hiddenInput()->label(false) ?>
-    <?= $form->field($modelRiwayatPendidikan, 'id_pendaftaran')->hiddenInput()->label(false) ?>
-    <?= $form->field($modelRiwayatPendidikan, 'id_pendaftaran')->hiddenInput()->label(false) ?>
-    <?= $form->field($modelDataOrangTua, 'id_pendaftaran')->hiddenInput()->label(false) ?>
+    
+    <?= $form->field($model, 'id_user')->hiddenInput(['value'=>'1'])->label(false) ?>
+    <?= $form->field($model, 'status_validasi')->hiddenInput(['value'=>'1'])->label(false) ?>
+    <?= $form->field($model, 'status')->hiddenInput(['value'=>'1'])->label(false) ?>
+    
 
     <?php ActiveForm::end(); ?>
 
-</div>
+</div></div></div>

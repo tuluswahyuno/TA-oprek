@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Divisi */
 
-$this->title = 'Create Divisi';
+/*$this->title = 'Create Divisi';*/
 $this->params['breadcrumbs'][] = ['label' => 'Divisis', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
