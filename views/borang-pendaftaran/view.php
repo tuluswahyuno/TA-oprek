@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Data Diri</a></li>
                 <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Riawayat Pendidikan</a></li>
                 <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Data Orang Tua</a></li>
+                <li role="presentation"><a href="#messages2" aria-controls="messages2" role="tab" data-toggle="tab">Berkas</a></li>
             </ul>
 
             <!-- content -->
@@ -160,6 +161,48 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'nama_ibu',
                                 'pekerjaan_ibu',
                                 'alamat_ibu',
+                                ],
+                            ]) ?>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="messages2">
+
+                    <?= DetailView::widget([
+                            'model' => $model,
+                            'attributes' => [
+                                [
+                                'attributes' => 'foto',
+                                'label' => 'Foto',
+                                'value' => function($model){
+                                    return Html::img('@web/uploads/foto/' . $model->foto,['alt' => 'foto', 'width' => 200]);
+                                },
+                                'format' => 'raw',
+                                ],
+                                [
+                                'attributes' => 'khs',
+                                'label' => 'KHS',
+                                'value' => function($model){
+                                    return Html::img('@web/uploads/khs/' . $model->khs,['alt' => 'khs', 'width' => 200]);
+                                },
+                                'format' => 'raw',
+                                ],
+                                [
+                                'attributes' => 'surat_rekomendasi',
+                                'label' => 'Surat Rekomendasi',
+                                'value' => function($model){
+                                    return Html::img('@web/uploads/surat-rekomendasi/' . $model->surat_rekomendasi,['alt' => 'surat_rekomendasi', 'width' => 200]);
+                                },
+                                'format' => 'raw',
+                                ],
+                                [
+                                'attributes' => 'sertifikat',
+                                'label' => 'Sertifikat',
+                                'value' => function($model){
+                                    return Html::img('@web/uploads/sertifikat/' . $model->sertifikat,['alt' => 'sertifikat', 'width' => 200]);
+                                },
+                                'format' => 'raw',
+                                ],
+
                                 ],
                             ]) ?>
         </div>

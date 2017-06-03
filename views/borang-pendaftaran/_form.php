@@ -6,6 +6,7 @@ use kartik\date\DatePicker;
 use kartik\depdrop\DepDrop;
 use app\models\Divisi;
 use yii\helpers\ArrayHelper;
+use kartik\file\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\BorangPendaftaran */
@@ -22,7 +23,7 @@ use yii\helpers\ArrayHelper;
 
             <div class="box-body">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <!-- Bagian Model Borang Pendaftaran -->
     <?php
@@ -59,22 +60,13 @@ use yii\helpers\ArrayHelper;
 
             $form->field($model, 'agama')->textInput(['maxlength' => true]) .
 
-            $form->field($model, 'file_foto')->fileInput() .
+            $form->field($model, 'status_marital')->textInput() .
 
-            $form->field($model, 'file_khs')->fileInput() .
-
-            $form->field($model, 'file_surat_rekomendasi')->fileInput() .
-
-            $form->field($model, 'file_sertifikat')->fileInput() .
-
+            $form->field($model, 'no_hp')->textInput() .
             
 
         "</div>
         <div class='col col-md-6'> " . 
-
-            $form->field($model, 'status_marital')->textInput() .
-
-            $form->field($model, 'no_hp')->textInput() .
 
             $form->field($model, 'hobi')->textInput(['maxlength' => true]).
 
@@ -98,7 +90,59 @@ use yii\helpers\ArrayHelper;
             ['prompt' => '-- Pilih Divisi --']
             ).
 
-           
+            $form->field($model, 'file_foto')->widget(FileInput::classname(),[
+                'options'=>[
+                    'multiple'=>false
+                ],
+                'pluginOptions' => [
+                    'initialPreviewAsData' => false, 
+                        'initialPreview'=>[
+                        Html::img("@web/uploads/foto/" . $model->foto,['width' => 200])
+                ],
+                'overwriteInitial'=>true
+                ]
+            ]) .
+
+
+            $form->field($model, 'file_surat_rekomendasi')->widget(FileInput::classname(),[
+                'options'=>[
+                    'multiple'=>false
+                ],
+                'pluginOptions' => [
+                    'initialPreviewAsData' => false, 
+                        'initialPreview'=>[
+                        Html::img("@web/uploads/surat-rekomendasi/" . $model->surat_rekomendasi,['width' => 200])
+                ],
+                'overwriteInitial'=>true
+                ]
+            ]) .
+
+           $form->field($model, 'file_khs')->widget(FileInput::classname(),[
+                'options'=>[
+                    'multiple'=>false
+                ],
+                'pluginOptions' => [
+                    'initialPreviewAsData' => false, 
+                        'initialPreview'=>[
+                        Html::img("@web/uploads/khs/" . $model->khs,['width' => 200])
+                ],
+                'overwriteInitial'=>true
+                ]
+            ]) .
+
+
+            $form->field($model, 'file_sertifikat')->widget(FileInput::classname(),[
+                'options'=>[
+                    'multiple'=>false
+                ],
+                'pluginOptions' => [
+                    'initialPreviewAsData' => false, 
+                        'initialPreview'=>[
+                        Html::img("@web/uploads/sertifikat/" . $model->sertifikat,['width' => 200])
+                ],
+                'overwriteInitial'=>true
+                ]
+            ]) .
 
         "</div>
     ";

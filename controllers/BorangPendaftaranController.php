@@ -14,6 +14,7 @@ use app\models\RiwayatPendidikan;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Divisi;
+use yii\web\UploadedFile;
 
 
 /**
@@ -103,10 +104,18 @@ class BorangPendaftaranController extends Controller
             $modelRiwayatPendidikanSD->attributes = $_POST['RiwayatPendidikan']['SD'];
             $modelRiwayatPendidikanSMP->attributes = $_POST['RiwayatPendidikan']['SMP'];
             $modelRiwayatPendidikanSMA->attributes = $_POST['RiwayatPendidikan']['SMA'];
+
+            //terima upload
+            $model->file_foto = UploadedFile::getInstance($model, 'file_foto');
+            $model->file_khs = UploadedFile::getInstance($model, 'file_khs');
+            $model->file_surat_rekomendasi = UploadedFile::getInstance($model, 'file_surat_rekomendasi');
+            $model->file_sertifikat = UploadedFile::getInstance($model, 'file_sertifikat');
+
             // echo "<pre>";
-            // print_r($modelRiwayatPendidikanSMA);
+            // print_r($model);
             // echo "</pre>";
             // exit();
+            
             //mulai proses validasi
             //proses validasi model borang pendaftaran
             if($model->save()){
@@ -126,10 +135,7 @@ class BorangPendaftaranController extends Controller
                         $modelRiwayatPendidikanSMA->save()){
                         //$model riwayat pendidikan tersimpan dengan benar
                         //validasi file upload
-                        $model->file_foto = UploadedFile::getInstance($model, 'file_foto');
-                        $model->file_khs = UploadedFile::getInstance($model, 'file_khs');
-                        $model->file_surat_rekomendasi = UploadedFile::getInstance($model, 'file_surat_rekomendasi');
-                        $model->file_sertifikat = UploadedFile::getInstance($model, 'file_sertifikat');
+                        
                         if($model->upload()){
                             //uploaded successfull
                             $transaction->commit();

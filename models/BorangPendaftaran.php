@@ -63,6 +63,7 @@ class BorangPendaftaran extends \yii\db\ActiveRecord
             [['tempat_lahir'], 'string', 'max' => 255],
             [['status_marital'], 'string', 'max' => 30],
             [['divisi_id'], 'exist', 'skipOnError' => true, 'targetClass' => Divisi::className(), 'targetAttribute' => ['divisi_id' => 'id']],
+            [['foto','khs','surat_rekomendasi','sertifikat'], 'default', 'value' => ''],
             [['foto','khs','surat_rekomendasi','sertifikat'], 'string', 'max' => 200],
             [['file_foto', 'file_khs', 'file_sertifikat', 'file_surat_rekomendasi'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
         ];
@@ -105,7 +106,7 @@ class BorangPendaftaran extends \yii\db\ActiveRecord
             'file_foto' => 'File Foto',
             'file_khs' => 'File KHS',
             'file_surat_rekomendasi' => 'File Surat Rekomendasi',
-            'file Sertifikat' => 'File Sertifikat',
+            'file_sertifikat' => 'File Sertifikat',
         ];
     }
 
@@ -150,9 +151,7 @@ class BorangPendaftaran extends \yii\db\ActiveRecord
             return 'Sudah Divalidasi';
         }
     }
-//khs
-                $this->khs = '('.date('d-m-Y H:i:s') . ')' . $this->file_khs->basename . '.' . $this->file_khs->extension;
-                $this->file_khs->saveAs('uploads/foto/' . $this->khs);
+
     //upload file
     public function upload()
     {       
@@ -176,7 +175,7 @@ class BorangPendaftaran extends \yii\db\ActiveRecord
             if (isset($this->file_sertifikat)) {
                 //sertifikat
                 $this->sertifikat = '('.date('d-m-Y H:i:s') . ')' . $this->file_sertifikat->basename . '.' . $this->file_sertifikat->extension;
-                $this->file_foto->saveAs('uploads/sertifikat/' . $this->sertifikat);
+                $this->file_sertifikat->saveAs('uploads/sertifikat/' . $this->sertifikat);
             }
             $this->save(false);
             return true;
