@@ -34,6 +34,8 @@
                     ['label' => 'Pendaftaran', 'icon' => 'pencil', 'url' => ['/borang-pendaftaran']],
                     ['label' => 'Divisi', 'icon' => 'dashboard', 'url' => ['/divisi']],
                     ['label' => 'Pembimbing', 'icon' => 'dashboard', 'url' => ['/pembimbing']],
+                    ['label' => 'Tugas', 'icon' => 'dashboard', 'url' => ['/tugas']],
+                    ['label' => 'Detail Tugas', 'icon' => 'dashboard', 'url' => ['/detail-tugas']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [
                         'label' => 'Same tools',
