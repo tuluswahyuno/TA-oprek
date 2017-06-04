@@ -182,13 +182,15 @@ class BorangPendaftaranController extends Controller
     public function actionUpdate($id)
     {
         
-
         //Mendeklarasikan semua model yang berhubungan dengan Model Borang Pendaftaran
         $modelRiwayatPendidikanSD = RiwayatPendidikan::findOne(['id_pendaftaran' => $id, 'jenjang' =>'Sekolah Dasar']);
         $modelRiwayatPendidikanSMP = RiwayatPendidikan::findOne(['id_pendaftaran' => $id, 'jenjang' =>'Sekolah Menengah Pertama']);
         $modelRiwayatPendidikanSMA = RiwayatPendidikan::findOne(['id_pendaftaran' => $id, 'jenjang' =>'Sekolah Menengah Atas']);
         $model = BorangPendaftaran::findOne(['id' => $id]);
         $modelDataOrangTua = DataOrangTua::findOne(['id_pendaftaran' => $id]);
+
+        // var_dump(fopen($model->foto, 'w'));
+        // exit();
 
         $connection = \Yii::$app->db;   
         $transaction = $connection->beginTransaction();
@@ -203,6 +205,12 @@ class BorangPendaftaranController extends Controller
             $modelRiwayatPendidikanSD->attributes = $_POST['RiwayatPendidikan']['SD'];
             $modelRiwayatPendidikanSMP->attributes = $_POST['RiwayatPendidikan']['SMP'];
             $modelRiwayatPendidikanSMA->attributes = $_POST['RiwayatPendidikan']['SMA'];
+
+            //terima file uploadan baru
+            $model->file_foto = UploadedFile::getInstance($model, 'file_foto');
+            $model->file_khs = UploadedFile::getInstance($model, 'file_khs');
+            $model->file_surat_rekomendasi = UploadedFile::getInstance($model, 'file_surat_rekomendasi');
+            $model->file_sertifikat = UploadedFile::getInstance($model, 'file_sertifikat');
             /*echo "<pre>";
             print_r($model);
             echo "</pre>";
@@ -225,8 +233,14 @@ class BorangPendaftaranController extends Controller
                         $modelRiwayatPendidikanSMP->save() &&
                         $modelRiwayatPendidikanSMA->save()){
                         //$model riwayat pendidikan tersimpan dengan benar
-                        $transaction->commit();
-                        return $this->redirect(['index']);
+                        //validasi file upload
+                        if($model->upload()){
+                            $transaction->commit();
+                            return $this->redirect(['index']);
+                        }else{
+
+                            $transaction->rollback();
+                        }
                     }else{
                         //$modelRiwayatPendidikan batal tersimpan
                         $transaction->rollback();
@@ -251,7 +265,6 @@ class BorangPendaftaranController extends Controller
             // exit();
             return $this->render('update', [
                 'model' => $model,
-                //Memberikan Return dari model yang telah dideklarasikan 
                 'modelRiwayatPendidikanSD' => $modelRiwayatPendidikanSD,
                 'modelRiwayatPendidikanSMP' => $modelRiwayatPendidikanSMP,
                 'modelRiwayatPendidikanSMA' => $modelRiwayatPendidikanSMA,

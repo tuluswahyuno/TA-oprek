@@ -96,10 +96,11 @@ use kartik\file\FileInput;
                 ],
                 'pluginOptions' => [
                     'initialPreviewAsData' => false, 
-                        'initialPreview'=>[
+                    'initialPreview'=>[
                         Html::img("@web/uploads/foto/" . $model->foto,['width' => 200])
-                ],
-                'overwriteInitial'=>true
+                    ],
+                    'initialCaption' => $model->foto,
+                'overwriteInitial'=> true
                 ]
             ]) .
 
@@ -113,7 +114,8 @@ use kartik\file\FileInput;
                         'initialPreview'=>[
                         Html::img("@web/uploads/surat-rekomendasi/" . $model->surat_rekomendasi,['width' => 200])
                 ],
-                'overwriteInitial'=>true
+                'overwriteInitial'=>true,
+                'initialCaption' => $model->surat_rekomendasi,
                 ]
             ]) .
 
@@ -126,7 +128,8 @@ use kartik\file\FileInput;
                         'initialPreview'=>[
                         Html::img("@web/uploads/khs/" . $model->khs,['width' => 200])
                 ],
-                'overwriteInitial'=>true
+                'overwriteInitial'=>true,
+                'initialCaption' => $model->khs,
                 ]
             ]) .
 
@@ -140,7 +143,8 @@ use kartik\file\FileInput;
                         'initialPreview'=>[
                         Html::img("@web/uploads/sertifikat/" . $model->sertifikat,['width' => 200])
                 ],
-                'overwriteInitial'=>true
+                'overwriteInitial'=> true,
+                'initialCaption' => $model->sertifikat,
                 ]
             ]) .
 

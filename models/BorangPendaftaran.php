@@ -65,7 +65,7 @@ class BorangPendaftaran extends \yii\db\ActiveRecord
             [['divisi_id'], 'exist', 'skipOnError' => true, 'targetClass' => Divisi::className(), 'targetAttribute' => ['divisi_id' => 'id']],
             [['foto','khs','surat_rekomendasi','sertifikat'], 'default', 'value' => ''],
             [['foto','khs','surat_rekomendasi','sertifikat'], 'string', 'max' => 200],
-            [['file_foto', 'file_khs', 'file_sertifikat', 'file_surat_rekomendasi'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            [['file_foto', 'file_khs', 'file_sertifikat', 'file_surat_rekomendasi'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -173,6 +173,42 @@ class BorangPendaftaran extends \yii\db\ActiveRecord
                 $this->file_surat_rekomendasi->saveAs('uploads/surat-rekomendasi/' . $this->surat_rekomendasi);
             }
             if (isset($this->file_sertifikat)) {
+                //sertifikat
+                $this->sertifikat = '('.date('d-m-Y H:i:s') . ')' . $this->file_sertifikat->basename . '.' . $this->file_sertifikat->extension;
+                $this->file_sertifikat->saveAs('uploads/sertifikat/' . $this->sertifikat);
+            }
+            $this->save(false);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //upload file
+    public function uploadUpdate()
+    {       
+        if ($this->validate()) {
+            if (isset($this->file_foto))
+            {
+                unlink(fopen($this->foto, 'a'));
+                //foto
+                $this->foto = '('.date('d-m-Y H:i:s') . ')' . $this->file_foto->basename . '.' . $this->file_foto->extension;
+                $this->file_foto->saveAs('uploads/foto/' . $this->foto);
+            }
+            if (isset($this->file_khs)) {
+                unlink(fopen($this->khs, 'a'));
+                //khs
+                $this->khs = '('.date('d-m-Y H:i:s') . ')' . $this->file_khs->basename . '.' . $this->file_khs->extension;
+                $this->file_khs->saveAs('uploads/khs/' . $this->khs);
+            }
+            if (isset($this->file_surat_rekomendasi)) {
+                unlink(fopen($this->surat_rekomendasi, 'a'));
+                //surat rekomendasi
+                $this->surat_rekomendasi = '('.date('d-m-Y H:i:s') . ')' . $this->file_surat_rekomendasi->basename . '.' . $this->file_surat_rekomendasi->extension;
+                $this->file_surat_rekomendasi->saveAs('uploads/surat-rekomendasi/' . $this->surat_rekomendasi);
+            }
+            if (isset($this->file_sertifikat)) {
+                unlink(fopen($this->sertifikat, 'a'));
                 //sertifikat
                 $this->sertifikat = '('.date('d-m-Y H:i:s') . ')' . $this->file_sertifikat->basename . '.' . $this->file_sertifikat->extension;
                 $this->file_sertifikat->saveAs('uploads/sertifikat/' . $this->sertifikat);
