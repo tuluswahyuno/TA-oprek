@@ -81,7 +81,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value'=>'pembimbing.nama_pembimbing'
             ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'buttons' => [
+                        'view' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-eye-open"></span> Lihat', $url, [
+                                        'class' => 'btn btn-xs btn-success', 'title' => 'Lihat Data',
+                            ]);
+                        },
+                        'update' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-pencil"></span> Perbarui', $url, [
+                                        'class' => 'btn btn-xs btn-primary', 'title' => 'Perbarui Data',
+                            ]);
+                        },
+                    ],
+            ],
         ],
     ]); ?>
 

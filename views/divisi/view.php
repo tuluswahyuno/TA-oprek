@@ -21,8 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- <h1><?= Html::encode($this->title) ?></h1> -->
 
     <!-- <div class="row"> <div class="col-sm-10 col-sm-offset-1"> -->
-    <?php 
-    if (user=guest){
+   
         
     }
     ?>

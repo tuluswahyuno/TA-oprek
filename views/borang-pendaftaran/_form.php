@@ -59,14 +59,15 @@ use kartik\file\FileInput;
             $form->field($model, 'jenis_kelamin')->textInput(['maxlength' => true]) .
 
             $form->field($model, 'agama')->textInput(['maxlength' => true]) .
-
-            $form->field($model, 'status_marital')->textInput() .
-
-            $form->field($model, 'no_hp')->textInput() .
             
 
         "</div>
-        <div class='col col-md-6'> " . 
+        <div class='col col-md-6'> " .
+
+
+            $form->field($model, 'status_marital')->textInput() .
+
+            $form->field($model, 'no_hp')->textInput() . 
 
             $form->field($model, 'hobi')->textInput(['maxlength' => true]).
 
@@ -90,26 +91,23 @@ use kartik\file\FileInput;
             ['prompt' => '-- Pilih Divisi --']
             ).
 
-            $form->field($model, 'file_foto')->widget(FileInput::classname(),[
+            
+
+        "</div>
+    ";
+    ?>
+
+    <?php
+        $modelForm5 = "
+            <div class='col col-md-6'> ".
+            
+
+             $form->field($model, 'file_surat_rekomendasi')->widget(FileInput::classname(),[
                 'options'=>[
                     'multiple'=>false
                 ],
                 'pluginOptions' => [
-                    'initialPreviewAsData' => false, 
-                    'initialPreview'=>[
-                        Html::img("@web/uploads/foto/" . $model->foto,['width' => 200])
-                    ],
-                    'initialCaption' => $model->foto,
-                'overwriteInitial'=> true
-                ]
-            ]) .
-
-
-            $form->field($model, 'file_surat_rekomendasi')->widget(FileInput::classname(),[
-                'options'=>[
-                    'multiple'=>false
-                ],
-                'pluginOptions' => [
+                 'showUpload' => false,
                     'initialPreviewAsData' => false, 
                         'initialPreview'=>[
                         Html::img("@web/uploads/surat-rekomendasi/" . $model->surat_rekomendasi,['width' => 200])
@@ -124,6 +122,7 @@ use kartik\file\FileInput;
                     'multiple'=>false
                 ],
                 'pluginOptions' => [
+                 'showUpload' => false,
                     'initialPreviewAsData' => false, 
                         'initialPreview'=>[
                         Html::img("@web/uploads/khs/" . $model->khs,['width' => 200])
@@ -131,14 +130,32 @@ use kartik\file\FileInput;
                 'overwriteInitial'=>true,
                 'initialCaption' => $model->khs,
                 ]
-            ]) .
+            ]) ."
 
+            </div>
+            <div class='col col-md-6'> " .
+
+            $form->field($model, 'file_foto')->widget(FileInput::classname(),[
+                'options'=>[
+                    'multiple'=>false
+                ],
+                'pluginOptions' => [
+                 'showUpload' => false,
+                    'initialPreviewAsData' => false, 
+                    'initialPreview'=>[
+                        Html::img("@web/uploads/foto/" . $model->foto,['width' => 200])
+                    ],
+                    'initialCaption' => $model->foto,
+                'overwriteInitial'=> true
+                ]
+            ]) .
 
             $form->field($model, 'file_sertifikat')->widget(FileInput::classname(),[
                 'options'=>[
                     'multiple'=>false
                 ],
                 'pluginOptions' => [
+                 'showUpload' => false,
                     'initialPreviewAsData' => false, 
                         'initialPreview'=>[
                         Html::img("@web/uploads/sertifikat/" . $model->sertifikat,['width' => 200])
@@ -146,11 +163,11 @@ use kartik\file\FileInput;
                 'overwriteInitial'=> true,
                 'initialCaption' => $model->sertifikat,
                 ]
-            ]) .
+            ]) ."
 
-        "</div>
-    ";
+            </div>"
     ?>
+
 
     <?php
     $modelForm4 = '<div col col-md-12>
@@ -278,6 +295,19 @@ use kartik\file\FileInput;
                             'class' => 'btn btn-primary'
                         ],
                      ],
+                 ],
+            ],
+            3 => [
+                'title' => 'Step 3',
+                'icon' => 'glyphicon glyphicon-user',
+                'content' => $modelForm3,
+                'buttons' => [
+                    'next' => [
+                        'title' => 'Selanjutnya', 
+                        'options' => [
+                            'class' => 'btn btn-primary'
+                        ],
+                     ],
                      'prev' => [
                         'title' => 'Kembali',
                         'options' => [
@@ -286,10 +316,10 @@ use kartik\file\FileInput;
                      ],
                  ],
             ],
-            3 => [
-                'title' => 'Step 3',
-                'icon' => 'glyphicon glyphicon-user',
-                'content' => $modelForm3,
+            4 => [
+                'title' => 'Step 4',
+                'icon' => 'glyphicon glyphicon-upload',
+                'content' => $modelForm5,
                 'buttons' => [
                     'save' => [
                         'title' => 'Simpan', 

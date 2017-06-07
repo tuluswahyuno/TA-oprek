@@ -5,10 +5,13 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                <?php if(!Yii::$app->user->isGuest){ ?>
+                <img src="<?= Yii::$app->request->baseUrl . '/uploads/user/' . Yii::$app->user->identity->foto ?>" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
-                <p>Alexander Pierce</p>
+                
+                <p><?= ucwords(Yii::$app->user->identity->username) ?></p>
+                <?php } ?>
 
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
@@ -35,7 +38,7 @@
                     ['label' => 'Divisi', 'icon' => 'dashboard', 'url' => ['/divisi']],
                     ['label' => 'Pembimbing', 'icon' => 'dashboard', 'url' => ['/pembimbing']],
                     ['label' => 'Tugas', 'icon' => 'dashboard', 'url' => ['/tugas']],
-                    ['label' => 'Detail Tugas', 'icon' => 'dashboard', 'url' => ['/detail-tugas']],
+                    ['label' => 'Detail Tugas', 'icon' => 'file-text', 'url' => ['/detail-tugas']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [
                         'label' => 'Same tools',
